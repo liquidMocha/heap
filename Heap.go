@@ -42,3 +42,9 @@ func (heap Heap) maxHeapify(index int) {
 		heap.maxHeapify(indexOfLargest)
 	}
 }
+
+func (heap Heap) buildMaxHeap() {
+	for i := (len(heap.data) - 1 - 1) / 2; i >= 0; i-- {
+		heap.maxHeapify(heap.data[i])
+	}
+}

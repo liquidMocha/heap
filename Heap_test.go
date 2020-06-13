@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 import "github.com/stretchr/testify/assert"
 
 func TestHeap(t *testing.T) {
@@ -34,5 +36,20 @@ func TestHeap(t *testing.T) {
 
 		expected := Heap{[]int{8, 4, 5, 0, 2, 1, 3}}
 		assert.Equal(t, expected, heap)
+	})
+
+	t.Run("should build max heap", func(t *testing.T) {
+		heap := Heap{data: []int{0, 1, 2, 3, 14, 5, 6, 71, 8, 9, 10, -1}}
+
+		heap.buildMaxHeap()
+
+		for i := range heap.data {
+			if heap.hasLeft(i) {
+				assert.True(t, heap.data[heap.left(i)] < heap.data[i])
+			}
+			if heap.hasRight(i) {
+				assert.True(t, heap.data[heap.right(i)] < heap.data[i])
+			}
+		}
 	})
 }
