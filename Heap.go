@@ -45,6 +45,19 @@ func (heap Heap) maxHeapify(index int) {
 
 func (heap Heap) buildMaxHeap() {
 	for i := (len(heap.data) - 1 - 1) / 2; i >= 0; i-- {
-		heap.maxHeapify(heap.data[i])
+		heap.maxHeapify(i)
 	}
+}
+
+func (heap Heap) sort() []int {
+	var result []int
+
+	for len(heap.data) != 0 {
+		heap.buildMaxHeap()
+
+		result = append(result, heap.data[0])
+		heap.data = heap.data[1:]
+	}
+
+	return result
 }

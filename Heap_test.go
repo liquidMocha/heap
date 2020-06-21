@@ -2,8 +2,10 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 import "github.com/stretchr/testify/assert"
+import "math/rand"
 
 func TestHeap(t *testing.T) {
 	t.Run("should get parent", func(t *testing.T) {
@@ -39,7 +41,13 @@ func TestHeap(t *testing.T) {
 	})
 
 	t.Run("should build max heap", func(t *testing.T) {
-		heap := Heap{data: []int{0, 1, 2, 3, 14, 5, 6, 71, 8, 9, 10, -1}}
+		heap := Heap{}
+		rand.Seed(time.Now().UnixNano())
+
+		for i := 0; i < 10; i++ {
+			randomNumber := rand.Intn(100)
+			heap.data = append(heap.data, randomNumber)
+		}
 
 		heap.buildMaxHeap()
 
@@ -49,6 +57,25 @@ func TestHeap(t *testing.T) {
 			}
 			if heap.hasRight(i) {
 				assert.True(t, heap.data[heap.right(i)] < heap.data[i])
+			}
+		}
+	})
+
+	t.Run("should heap sort", func(t *testing.T) {
+		heap := Heap{}
+		rand.Seed(time.Now().UnixNano())
+
+		for i := 0; i < 50; i++ {
+			randomNumber := rand.Intn(100)
+			heap.data = append(heap.data, randomNumber)
+		}
+
+		actual := heap.sort()
+
+		assert.True(t, len(actual) == len(heap.data))
+		for i := range actual {
+			if i != len(actual)-1 {
+				assert.True(t, actual[i] >= actual[i+1])
 			}
 		}
 	})
