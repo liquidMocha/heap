@@ -1,4 +1,4 @@
-package main
+package heap
 
 import (
 	"testing"
@@ -44,7 +44,7 @@ func TestHeap(t *testing.T) {
 		heap := Heap{}
 		rand.Seed(time.Now().UnixNano())
 
-		for i := 0; i < 10; i++ {
+		for i := 0; i < 50; i++ {
 			randomNumber := rand.Intn(100)
 			heap.data = append(heap.data, randomNumber)
 		}
@@ -53,10 +53,10 @@ func TestHeap(t *testing.T) {
 
 		for i := range heap.data {
 			if heap.hasLeft(i) {
-				assert.True(t, heap.data[heap.left(i)] < heap.data[i])
+				assert.True(t, heap.data[heap.left(i)] <= heap.data[i])
 			}
 			if heap.hasRight(i) {
-				assert.True(t, heap.data[heap.right(i)] < heap.data[i])
+				assert.True(t, heap.data[heap.right(i)] <= heap.data[i])
 			}
 		}
 	})
